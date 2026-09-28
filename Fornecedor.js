@@ -66,5 +66,14 @@ export class Fornecedor {
             `Endereço: ${this.#endereco}\n` +
             `Crédito: ${this.#credito}\n`
     }
-
+    
+    stringify() {
+        return JSON.stringify({
+            razao_social: this.#razao_social,
+            cnpj: this.#cnpj,
+            telefone: this.#telefone,
+            endereco: this.#endereco,
+            credito: this.#credito
+        });
+    }
 }
