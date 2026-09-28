@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Armazém Xampu</title>
+    <link rel="icon" type="imagem/png" href="box.png" />
+    <link rel="stylesheet" href="armazem.css">
+</head>
+
+<body>
+    <header>
+        <img src="box.png" class="icon">
+        <h1 class="titulo">Armazém Xampu</h1>
+    </header>
+    <main>
+        <p>Cadastro:<br>
+        <input type="radio" name="opcao" value="produto" id="rbProduto">Produto
+        <br>
+        <input type="radio" name="opcao" value="fornecedor" id="rbFornecedor">Fornecedor
+        </p>
+        <div id="divProduto" style="display: none;">
+            <select name="opcao" id="sltProduto">
+                <option value="">Selecione uma opção:</option>
+                <option value="Cadastrar">Cadastrar um Produto.</option>
+                <option value="Excluir">Excluir um Produto.</option>
+                <option value="Alterar">Alterar Dados de um Produto.</option>
+                <option value="AlterarVenda">Alterar Quantidade Vendida em um Mês.</option>
+                <option value="Consultar">Consultar Dados de um Produto.</option>
+                <option value="Comprar">Comprar um Produto.</option>
+                <option value="Vender">Vender um Produto.</option>
+                <option value="ConsultarQtd">Consultar Quantidade Vendida no Ano.</option>
+                <option value="ConsultarProd">Consultar Produto Mais Vendido no Mês.</option>
+                <option value="Faturamento">Consultar Faturamento do Mês.</option>
+                <option value="ListarVendas">Listar Tabela de Vendas Anual.</option>
+                <option value="ListarProdutos">Listar todos os Produtos.</option>
+                <option value="FiltrarQtdEst">Filtrar Produtos com até X em Estoque.</option>
+                <option value="ListarProdFornecedor">Listar Produtos de um Fornecedor.</option>
+            </select>
+            <section>
+                <label>Produto: <input type="text" placeholder="Digite um produto" id="inProduto" disabled></label>
+                <label>Preço Compra: R$<input type="number" placeholder="Digite o preço de compra" id="inPrecoCompra" disabled></label>
+                <label>Preço Venda: R$<input type="number" placeholder="Digite o preço de venda" id="inPrecoVenda" disabled></label>
+                <label>Quantidade: <input type="number" placeholder="Digite a quantidade" id="inQtd" disabled>
+                </label><label>Mês: <input type="number" placeholder="Digite um mês [1-12]" id="inMes" disabled></label>
+                <label>CNPJ do Fornecedor: <input type="text" placeholder="Insira o CNPJ do Fornecedor" id="inFornecedor" disabled></label>   
+            </section>
+        </div>
+        
+        <div id="divFornecedor" style="display: none;">
+            <select name="opcao" id="sltFornecedor">
+                <option value="">Selecione uma opção!</option>
+                <option value="Cadastrar">Cadastrar Novo Fornecedor.</option>
+                <option value="Excluir">Excluir um Fornecedor.</option>
+                <option value="Alterar">Alterar Dados de um Fornecedor.</option>
+                <option value="Consultar">Consultar Dados de um Fornecedor.</option>
+                <option value="Listar">Listar os Fornecedores.</option>
+                <option value="FiltrarLimCred">Filtrar Fornecedores a partir de Limite de Crédito Disponibilizado.</option>
+                
+            </select>
+            <section>
+                <label>Razão Social: <input type="text" placeholder="Digite a Razão Social" id="inRazaoSoc"
+                        disabled></label>
+                <label>CNPJ: <input type="text" placeholder="XX.XXX.XXX/XXXX-XX" id="inCnpj" disabled></label>
+                <label>Telefone: <input type="text" placeholder="(XX)XXXXX-XXXX" id="inTelefone" disabled></label>
+                <label>Endereço: <input type="text" placeholder="Digite o Endereço" id="inEndereco" disabled></label>
+                <label>Crédito Disponibilizado: R$<input type="number" id="inCreditoDisp" placeholder="valor > 0.00"disabled></label>
+            </section>
+        </div>
+
+        <div>
+            <input type="button" value="Ok" id="btOk">
+        </div>
+        <pre id="outResultado">Resultado</pre>
+        <section class="sectionResultado">
+        </section>
+    </main>
+
+    <script src="./armazemView.js" type="module"></script>
+
+</body>
+
+</html>
