@@ -1,11 +1,12 @@
 import { Fornecedor } from './Fornecedor.js';
+import { Produto } from './Produto.js';
 
 export class ArmazemController {
     #vetArmazem;
-
+    #vetProdutos;
     constructor() {
         this.#vetArmazem = [];
-
+        this.#vetProdutos = [];
     }
 
     cadastraFornecedor(razao_social, endereco, telefone, cnpj, credito) {
@@ -67,7 +68,7 @@ export class ArmazemController {
         return vetObjFornecedores;
     }
 
-    filtrarFornecedoresPorCredito(creditoFiltrado){
+    filtrarFornecedoresPorCredito(creditoFiltrado) {
         var vetCreditosFiltrados = this.#vetArmazem.filter((fornecedor => fornecedor.credito == creditoFiltrado))
         var vetObjFornecedores = []
         vetCreditosFiltrados.forEach((fornecedor) => {
@@ -81,4 +82,83 @@ export class ArmazemController {
         })
         return vetObjFornecedores;
     }
+
+    //Seção de Produtos
+
+    cadastrarProdutos(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
+        _vendasMensais, _fornecedor) {
+
+        let fornecedor = this.pesquisarFornecedor(cnpj);
+
+        if (fornecedor == undefined) {
+            this.#vetProdutos.push(new Produto(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
+                _vendasMensais, _fornecedor));
+            return true;
+        }
+        return false;
+    }
+
+    excluirProduto(infoDesc) {
+        let indProduto = this.#vetProdutos.findIndex((produto) =>
+            produto._descricao == infoDesc);
+
+        if (indProduto == -1) {
+            return false;
+
+        } else {
+            this.#vetProdutos.splice(indProduto, 1);
+            return true;
+        }
+    }
+
+    alterarProduto() {
+
+    }
+
+    alterarVendaMes() {
+
+    }
+
+    comprarProduto() {
+
+    }
+
+    venderProduto() {
+
+    }
+
+    consultarTotalVendasAno() {
+
+    }
+
+    consultarMaisVendidoMes() {
+
+    }
+
+    consultarFaturamentoMes() {
+
+    }
+
+    listarProdutos() {
+
+    }
+
+    listarTabelaVendasAnual() {
+
+    }
+
+    listarProdutosFornecedor() {
+
+    }
+
+    //Persistência
+
+    carregarDados() {
+
+    }
+
+    salvarDados() {
+
+    }
 }
+
