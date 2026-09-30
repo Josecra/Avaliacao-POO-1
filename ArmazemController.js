@@ -417,7 +417,6 @@ export class ArmazemController {
      * (para religar a referência Produto → Fornecedor pelo CNPJ).
      */
     carregarDados() {
-<<<<<<< HEAD
         // Limpa os vetores atuais antes de carregar
         this.#vetProdutos = [];
         this.#vetProdutos = [];
@@ -463,41 +462,6 @@ export class ArmazemController {
                     objLitProdutos._fornecedor     
                 ))
             })
-=======
-        // 1) Fornecedores
-        var strJSONFornecedores = localStorage.getItem("armazem_fornecedores");
-        if (strJSONFornecedores != null) {
-            var vetFornecedoresSalvos = JSON.parse(strJSONFornecedores);
-            vetFornecedoresSalvos.forEach((objLitFornecedor) => {
-                this.#vetArmazem.push(new Fornecedor(
-                    objLitFornecedor.razao_social,
-                    objLitFornecedor.endereco,
-                    objLitFornecedor.telefone,
-                    objLitFornecedor.cnpj,
-                    objLitFornecedor.credito
-                ));
-            });
-        }
-
-        // 2) Produtos — religando ao fornecedor pelo CNPJ
-        var strJSONProdutos = localStorage.getItem("armazem_produtos");
-        if (strJSONProdutos != null) {
-            var vetProdutosSalvos = JSON.parse(strJSONProdutos);
-            vetProdutosSalvos.forEach((objLitProduto) => {
-                var objFornecedor = undefined;
-                if (objLitProduto.cnpjForn != null) {
-                    objFornecedor = this.pesquisarFornecedor(objLitProduto.cnpjForn);
-                }
-                this.#vetProdutos.push(new Produto(
-                    objLitProduto.descricao,
-                    objLitProduto.precoCompra,
-                    objLitProduto.precoVenda,
-                    objLitProduto.qtdEstoque,
-                    objLitProduto.vendasMensais,
-                    objFornecedor
-                ));
-            });
->>>>>>> 811916b (merge ajustes finais)
         }
     }
 
@@ -508,7 +472,6 @@ export class ArmazemController {
      */
     salvarDados() {
         if (this.#vetArmazem.length > 0) {
-<<<<<<< HEAD
             var strJSONvetArmazem = "[" + this.#vetArmazem[0].stringify();
             for (let i = 1; i < this.#vetArmazem.length; i++) {
                 strJSONvetArmazem += "," + this.#vetArmazem[i].stringify();
@@ -526,23 +489,6 @@ export class ArmazemController {
             strJSONvetProdutos += "\n]"
 
             localStorage.setItem("produtosSalvos", strJSONvetProdutos)
-=======
-            var strJSONFornecedores = "[" + this.#vetArmazem[0].stringify();
-            for (let i = 1; i < this.#vetArmazem.length; i++) {
-                strJSONFornecedores += "," + this.#vetArmazem[i].stringify();
-            }
-            strJSONFornecedores += "]";
-            localStorage.setItem("armazem_fornecedores", strJSONFornecedores);
-        }
-
-        if (this.#vetProdutos.length > 0) {
-            var strJSONProdutos = "[" + this.#vetProdutos[0].stringify();
-            for (let i = 1; i < this.#vetProdutos.length; i++) {
-                strJSONProdutos += "," + this.#vetProdutos[i].stringify();
-            }
-            strJSONProdutos += "]";
-            localStorage.setItem("armazem_produtos", strJSONProdutos);
->>>>>>> 811916b (merge ajustes finais)
         }
     }
 }
