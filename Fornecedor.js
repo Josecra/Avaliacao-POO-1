@@ -1,24 +1,24 @@
 export class Fornecedor {
-    #razao_social;
+    #razaoSocial;
     #cnpj;
     #telefone;
     #endereco;
-    #credito;
+    #creditoDisp;
 
-    constructor(razao_social, cnpj, telefone, endereco, credito) {
-        this.#razao_social = razao_social;
+    constructor(razaoSocial, cnpj, telefone, endereco, creditoDisp) {
+        this.#razaoSocial = razaoSocial;
         this.#cnpj = cnpj;
         this.#telefone = telefone;
         this.#endereco = endereco;
-        this.#credito = credito;
+        this.#creditoDisp = creditoDisp;
     }
 
-    get razao_social() {
-        return this.#razao_social;
+    get razaoSocial() {
+        return this.#razaoSocial;
 
     }
-    set razao_social(razao_social) {
-        this.#razao_social = razao_social;
+    set razaoSocial(razaoSocial) {
+        this.#razaoSocial = razaoSocial;
 
     }
 
@@ -49,31 +49,31 @@ export class Fornecedor {
     }
 
     get credito() {
-        return this.#credito;
+        return this.#creditoDisp;
 
     }
 
     set credito(credito) {
         if (credito > 0) {
-            this.#credito = credito;
+            this.#creditoDisp = credito;
         }
     }
 
     toString() {
-        return `Razão Social: ${this.#razao_social} \n` +
+        return `Razão Social: ${this.#razaoSocial} \n` +
             `CNPJ: ${this.#cnpj}\n` +
             `Telefone: ${this.#telefone}\n` +
             `Endereço: ${this.#endereco}\n` +
-            `Crédito: ${this.#credito}\n`
+            `Crédito: ${this.#creditoDisp}\n`
     }
     
     stringify() {
         return JSON.stringify({
-            razao_social: this.#razao_social,
+            razao_social: this.#razaoSocial,
             cnpj: this.#cnpj,
             telefone: this.#telefone,
             endereco: this.#endereco,
-            credito: this.#credito
+            credito: this.#creditoDisp
         });
     }
 }
