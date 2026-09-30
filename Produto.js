@@ -22,14 +22,14 @@ export class Produto {
      * - _fornecedor é opcional: se não vier, inicia como undefined.
      */
     constructor(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
-                _vendasMensais = new Array(12).fill(0),
-                _fornecedor = undefined) {
-        this.#descricao     = _descricao;
-        this.#precoCompra   = _precoCompra;
-        this.#precoVenda    = _precoVenda;
-        this.#qtdEstoque    = _qtdEstoque;
+        _vendasMensais = new Array(12).fill(0),
+        _fornecedor = undefined) {
+        this.#descricao = _descricao;
+        this.#precoCompra = _precoCompra;
+        this.#precoVenda = _precoVenda;
+        this.#qtdEstoque = _qtdEstoque;
         this.#vendasMensais = _vendasMensais;
-        this.#fornecedor    = _fornecedor;
+        this.#fornecedor = _fornecedor;
     }
 
     // ── Getters e Setters ────────────────────────────────────────────────
@@ -150,11 +150,11 @@ export class Produto {
         }
 
         return "Descrição: " + this.#descricao + "\n" +
-               "Preço de Compra: R$ " + this.#precoCompra.toFixed(2) + "\n" +
-               "Preço de Venda: R$ " + this.#precoVenda.toFixed(2) + "\n" +
-               "Quantidade em Estoque: " + this.#qtdEstoque + "\n" +
-               "Vendas Mensais: [" + this.#vendasMensais.join(", ") + "]\n" +
-               "Fornecedor: " + strFornecedor;
+            "Preço de Compra: R$ " + this.#precoCompra.toFixed(2) + "\n" +
+            "Preço de Venda: R$ " + this.#precoVenda.toFixed(2) + "\n" +
+            "Quantidade em Estoque: " + this.#qtdEstoque + "\n" +
+            "Vendas Mensais: [" + this.#vendasMensais.join(", ") + "]\n" +
+            "Fornecedor: " + strFornecedor;
     }
 
     /**
@@ -169,12 +169,12 @@ export class Produto {
      */
     stringify() {
         return JSON.stringify({
-            descricao:     this.#descricao,
-            precoCompra:   this.#precoCompra,
-            precoVenda:    this.#precoVenda,
-            qtdEstoque:    this.#qtdEstoque,
+            descricao: this.#descricao,
+            precoCompra: this.#precoCompra,
+            precoVenda: this.#precoVenda,
+            qtdEstoque: this.#qtdEstoque,
             vendasMensais: this.#vendasMensais,
-            cnpjForn:      this.#fornecedor ? this.#fornecedor.cnpj : null
+            cnpjForn: this.#fornecedor ? this.#fornecedor.cnpj : null
         });
     }
 }

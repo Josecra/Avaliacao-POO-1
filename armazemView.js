@@ -17,35 +17,35 @@ const armazemControl = new ArmazemController();
 armazemControl.carregarDados();
 
 // ── Elementos do DOM — seleção de cadastro ─────────────────────────────────
-const rbProduto    = document.getElementById("rbProduto");
+const rbProduto = document.getElementById("rbProduto");
 const rbFornecedor = document.getElementById("rbFornecedor");
 
 // ── Elementos do DOM — blocos de cadastro ──────────────────────────────────
-const divProduto    = document.getElementById("divProduto");
+const divProduto = document.getElementById("divProduto");
 const divFornecedor = document.getElementById("divFornecedor");
 
 // ── Elementos do DOM — selects de opção ────────────────────────────────────
-const selectProduto    = document.getElementById("sltProduto");
+const selectProduto = document.getElementById("sltProduto");
 const selectFornecedor = document.getElementById("sltFornecedor");
 
 // ── Elementos do DOM — campos de Produto ───────────────────────────────────
-const inProduto     = document.getElementById("inProduto");
+const inProduto = document.getElementById("inProduto");
 const inPrecoCompra = document.getElementById("inPrecoCompra");
-const inPrecoVenda  = document.getElementById("inPrecoVenda");
-const inQtd         = document.getElementById("inQtd");
-const inMes         = document.getElementById("inMes");
-const inFornecedor  = document.getElementById("inFornecedor");
+const inPrecoVenda = document.getElementById("inPrecoVenda");
+const inQtd = document.getElementById("inQtd");
+const inMes = document.getElementById("inMes");
+const inFornecedor = document.getElementById("inFornecedor");
 
 // ── Elementos do DOM — campos de Fornecedor ────────────────────────────────
-const inRazaoSoc    = document.getElementById("inRazaoSoc");
-const inCnpj        = document.getElementById("inCnpj");
-const inTelefone    = document.getElementById("inTelefone");
-const inEndereco    = document.getElementById("inEndereco");
+const inRazaoSoc = document.getElementById("inRazaoSoc");
+const inCnpj = document.getElementById("inCnpj");
+const inTelefone = document.getElementById("inTelefone");
+const inEndereco = document.getElementById("inEndereco");
 const inCreditoDisp = document.getElementById("inCreditoDisp");
 
 // ── Elementos do DOM — saída e botão de execução ───────────────────────────
-const btOk          = document.getElementById("btOk");
-const outResultado  = document.getElementById("outResultado");
+const btOk = document.getElementById("btOk");
+const outResultado = document.getElementById("outResultado");
 const sectionResult = document.querySelector(".sectionResultado");
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -53,13 +53,13 @@ const sectionResult = document.querySelector(".sectionResultado");
 // ══════════════════════════════════════════════════════════════════════════
 
 rbProduto.addEventListener("change", function () {
-    divProduto.style.display    = "block";
+    divProduto.style.display = "block";
     divFornecedor.style.display = "none";
     limparTela();
 });
 
 rbFornecedor.addEventListener("change", function () {
-    divProduto.style.display    = "none";
+    divProduto.style.display = "none";
     divFornecedor.style.display = "block";
     limparTela();
 });
@@ -108,10 +108,10 @@ btOk.addEventListener("click", function () {
 function configurarCamposProduto(opcao) {
     switch (opcao) {
         case "Cadastrar":
-            habilitar(inProduto,     "Digite o nome do produto");
+            habilitar(inProduto, "Digite o nome do produto");
             habilitar(inPrecoCompra, "Preço de Compra");
-            habilitar(inPrecoVenda,  "Preço de Venda");
-            habilitar(inQtd,         "Quantidade em estoque");
+            habilitar(inPrecoVenda, "Preço de Venda");
+            habilitar(inQtd, "Quantidade em estoque");
             break;
 
         case "Excluir":
@@ -121,30 +121,30 @@ function configurarCamposProduto(opcao) {
             break;
 
         case "Alterar":
-            habilitar(inProduto,     "Digite o nome do produto");
+            habilitar(inProduto, "Digite o nome do produto");
             habilitar(inPrecoCompra, "Novo Preço de Compra (opcional)");
-            habilitar(inPrecoVenda,  "Novo Preço de Venda (opcional)");
-            habilitar(inQtd,         "Nova Quantidade em Estoque (opcional)");
-            habilitar(inFornecedor,  "CNPJ do Fornecedor (opcional)");
+            habilitar(inPrecoVenda, "Novo Preço de Venda (opcional)");
+            habilitar(inQtd, "Nova Quantidade em Estoque (opcional)");
+            habilitar(inFornecedor, "CNPJ do Fornecedor (opcional)");
             break;
 
         case "AlterarVenda":
             habilitar(inProduto, "Digite o nome do produto");
-            habilitar(inMes,     "Mês [1-12]");
-            habilitar(inQtd,     "Quantidade vendida no mês");
+            habilitar(inMes, "Mês [1-12]");
+            habilitar(inQtd, "Quantidade vendida no mês");
             break;
 
         case "Comprar":
-            habilitar(inProduto,     "Digite o nome do produto");
-            habilitar(inQtd,         "Quantidade comprada");
+            habilitar(inProduto, "Digite o nome do produto");
+            habilitar(inQtd, "Quantidade comprada");
             habilitar(inPrecoCompra, "Novo Preço de Compra (opcional)");
-            habilitar(inPrecoVenda,  "Novo Preço de Venda (opcional)");
-            habilitar(inFornecedor,  "CNPJ do Fornecedor (opcional)");
+            habilitar(inPrecoVenda, "Novo Preço de Venda (opcional)");
+            habilitar(inFornecedor, "CNPJ do Fornecedor (opcional)");
             break;
 
         case "Vender":
             habilitar(inProduto, "Digite o nome do produto");
-            habilitar(inQtd,     "Quantidade vendida");
+            habilitar(inQtd, "Quantidade vendida");
             break;
 
         case "ConsultarProd":
@@ -173,10 +173,10 @@ function configurarCamposProduto(opcao) {
 function configurarCamposFornecedor(opcao) {
     switch (opcao) {
         case "Cadastrar":
-            habilitar(inRazaoSoc,    "Razão Social");
-            habilitar(inCnpj,        "XX.XXX.XXX/XXXX-XX");
-            habilitar(inTelefone,    "(XX)XXXXX-XXXX");
-            habilitar(inEndereco,    "Endereço");
+            habilitar(inRazaoSoc, "Razão Social");
+            habilitar(inCnpj, "XX.XXX.XXX/XXXX-XX");
+            habilitar(inTelefone, "(XX)XXXXX-XXXX");
+            habilitar(inEndereco, "Endereço");
             habilitar(inCreditoDisp, "Crédito Disponibilizado");
             break;
 
@@ -186,10 +186,10 @@ function configurarCamposFornecedor(opcao) {
             break;
 
         case "Alterar":
-            habilitar(inCnpj,        "XX.XXX.XXX/XXXX-XX");
-            habilitar(inRazaoSoc,    "Nova Razão Social (opcional)");
-            habilitar(inTelefone,    "Novo Telefone (opcional)");
-            habilitar(inEndereco,    "Novo Endereço (opcional)");
+            habilitar(inCnpj, "XX.XXX.XXX/XXXX-XX");
+            habilitar(inRazaoSoc, "Nova Razão Social (opcional)");
+            habilitar(inTelefone, "Novo Telefone (opcional)");
+            habilitar(inEndereco, "Novo Endereço (opcional)");
             habilitar(inCreditoDisp, "Novo Crédito (opcional)");
             break;
 
@@ -208,13 +208,13 @@ function configurarCamposFornecedor(opcao) {
 // ══════════════════════════════════════════════════════════════════════════
 
 function executarOpcaoProduto() {
-    let opcao       = selectProduto.value;
-    let descricao   = inProduto.value.trim();
+    let opcao = selectProduto.value;
+    let descricao = inProduto.value.trim();
     let precoCompra = Number(inPrecoCompra.value);
-    let precoVenda  = Number(inPrecoVenda.value);
-    let qtd         = Number(inQtd.value);
-    let mes         = Number(inMes.value);
-    let cnpjForn    = inFornecedor.value.trim();
+    let precoVenda = Number(inPrecoVenda.value);
+    let qtd = Number(inQtd.value);
+    let mes = Number(inMes.value);
+    let cnpjForn = inFornecedor.value.trim();
 
     switch (opcao) {
 
@@ -261,9 +261,9 @@ function executarOpcaoProduto() {
                 );
 
                 let mensagens = {
-                    "SUCESSO":                   { cor: "blue", texto: "Produto alterado com sucesso!" },
-                    "PRODUTO_NAO_ENCONTRADO":    { cor: "red",  texto: "Erro! Produto \"" + descricao + "\" não encontrado!" },
-                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red",  texto: "Erro! Fornecedor com CNPJ \"" + cnpjForn + "\" não encontrado!" }
+                    "SUCESSO": { cor: "blue", texto: "Produto alterado com sucesso!" },
+                    "PRODUTO_NAO_ENCONTRADO": { cor: "red", texto: "Erro! Produto \"" + descricao + "\" não encontrado!" },
+                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red", texto: "Erro! Fornecedor com CNPJ \"" + cnpjForn + "\" não encontrado!" }
                 };
 
                 exibirMensagem(mensagens[resultado].texto, mensagens[resultado].cor);
@@ -286,9 +286,9 @@ function executarOpcaoProduto() {
                 let resultado = armazemControl.alterarVendaMes(descricao, mes, qtd);
 
                 let mensagens = {
-                    "SUCESSO":                { cor: "blue", texto: "Venda mensal atualizada com sucesso!" },
-                    "PRODUTO_NAO_ENCONTRADO": { cor: "red",  texto: "Produto \"" + descricao + "\" não encontrado!" },
-                    "MES_INVALIDO":           { cor: "red",  texto: "Mês inválido! Informe um valor entre 1 e 12." }
+                    "SUCESSO": { cor: "blue", texto: "Venda mensal atualizada com sucesso!" },
+                    "PRODUTO_NAO_ENCONTRADO": { cor: "red", texto: "Produto \"" + descricao + "\" não encontrado!" },
+                    "MES_INVALIDO": { cor: "red", texto: "Mês inválido! Informe um valor entre 1 e 12." }
                 };
 
                 exibirMensagem(mensagens[resultado].texto, mensagens[resultado].cor);
@@ -339,10 +339,10 @@ function executarOpcaoProduto() {
                 );
 
                 let mensagens = {
-                    "SUCESSO":                   { cor: "blue", texto: "Compra de \"" + descricao + "\" registrada com sucesso!" },
-                    "PRODUTO_NAO_ENCONTRADO":    { cor: "red",  texto: "Erro! Produto \"" + descricao + "\" não encontrado!" },
-                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red",  texto: "Erro! Fornecedor com CNPJ \"" + cnpjForn + "\" não encontrado!" },
-                    "CREDITO_INSUFICIENTE":      { cor: "red",  texto: "Erro! O valor total da compra excede o crédito disponibilizado pelo Fornecedor!" }
+                    "SUCESSO": { cor: "blue", texto: "Compra de \"" + descricao + "\" registrada com sucesso!" },
+                    "PRODUTO_NAO_ENCONTRADO": { cor: "red", texto: "Erro! Produto \"" + descricao + "\" não encontrado!" },
+                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red", texto: "Erro! Fornecedor com CNPJ \"" + cnpjForn + "\" não encontrado!" },
+                    "CREDITO_INSUFICIENTE": { cor: "red", texto: "Erro! O valor total da compra excede o crédito disponibilizado pelo Fornecedor!" }
                 };
 
                 exibirMensagem(mensagens[resultado].texto, mensagens[resultado].cor);
@@ -503,12 +503,12 @@ function executarOpcaoProduto() {
 // ══════════════════════════════════════════════════════════════════════════
 
 function executarOpcaoFornecedor() {
-    let opcao    = selectFornecedor.value;
+    let opcao = selectFornecedor.value;
     let razaoSoc = inRazaoSoc.value.trim();
-    let cnpj     = inCnpj.value.trim();
+    let cnpj = inCnpj.value.trim();
     let telefone = inTelefone.value.trim();
     let endereco = inEndereco.value.trim();
-    let credito  = Number(inCreditoDisp.value);
+    let credito = Number(inCreditoDisp.value);
 
     switch (opcao) {
 
@@ -536,9 +536,9 @@ function executarOpcaoFornecedor() {
                 let resultado = armazemControl.excluirFornecedor(cnpj);
 
                 let mensagens = {
-                    "SUCESSO":                   { cor: "blue", texto: "Fornecedor excluído com sucesso!" },
-                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red",  texto: "Erro! Fornecedor com CNPJ \"" + cnpj + "\" não encontrado!" },
-                    "FORNECEDOR_COM_PRODUTOS":   { cor: "red",  texto: "Erro! Não é possível excluir: fornecedor possui produtos vinculados!" }
+                    "SUCESSO": { cor: "blue", texto: "Fornecedor excluído com sucesso!" },
+                    "FORNECEDOR_NAO_ENCONTRADO": { cor: "red", texto: "Erro! Fornecedor com CNPJ \"" + cnpj + "\" não encontrado!" },
+                    "FORNECEDOR_COM_PRODUTOS": { cor: "red", texto: "Erro! Não é possível excluir: fornecedor possui produtos vinculados!" }
                 };
 
                 exibirMensagem(mensagens[resultado].texto, mensagens[resultado].cor);
@@ -617,7 +617,7 @@ function executarOpcaoFornecedor() {
  * Habilita um campo de formulário e define seu placeholder.
  */
 function habilitar(campo, placeholder) {
-    campo.disabled    = false;
+    campo.disabled = false;
     campo.placeholder = placeholder;
 }
 
@@ -626,12 +626,12 @@ function habilitar(campo, placeholder) {
  * Também desabilita o botão OK.
  */
 function desabilitarCamposProduto() {
-    inProduto.disabled     = true;  inProduto.value     = "";  inProduto.placeholder     = "";
-    inPrecoCompra.disabled = true;  inPrecoCompra.value = "";  inPrecoCompra.placeholder = "";
-    inPrecoVenda.disabled  = true;  inPrecoVenda.value  = "";  inPrecoVenda.placeholder  = "";
-    inQtd.disabled         = true;  inQtd.value         = "";  inQtd.placeholder         = "";
-    inMes.disabled         = true;  inMes.value         = "";  inMes.placeholder         = "";
-    inFornecedor.disabled  = true;  inFornecedor.value  = "";  inFornecedor.placeholder  = "";
+    inProduto.disabled = true; inProduto.value = ""; inProduto.placeholder = "";
+    inPrecoCompra.disabled = true; inPrecoCompra.value = ""; inPrecoCompra.placeholder = "";
+    inPrecoVenda.disabled = true; inPrecoVenda.value = ""; inPrecoVenda.placeholder = "";
+    inQtd.disabled = true; inQtd.value = ""; inQtd.placeholder = "";
+    inMes.disabled = true; inMes.value = ""; inMes.placeholder = "";
+    inFornecedor.disabled = true; inFornecedor.value = ""; inFornecedor.placeholder = "";
 
     btOk.disabled = true;
 }
@@ -641,11 +641,11 @@ function desabilitarCamposProduto() {
  * Também desabilita o botão OK.
  */
 function desabilitarCamposFornecedor() {
-    inRazaoSoc.disabled    = true;  inRazaoSoc.value    = "";  inRazaoSoc.placeholder    = "";
-    inCnpj.disabled        = true;  inCnpj.value        = "";  inCnpj.placeholder        = "";
-    inTelefone.disabled    = true;  inTelefone.value    = "";  inTelefone.placeholder    = "";
-    inEndereco.disabled    = true;  inEndereco.value    = "";  inEndereco.placeholder    = "";
-    inCreditoDisp.disabled = true;  inCreditoDisp.value = "";  inCreditoDisp.placeholder = "";
+    inRazaoSoc.disabled = true; inRazaoSoc.value = ""; inRazaoSoc.placeholder = "";
+    inCnpj.disabled = true; inCnpj.value = ""; inCnpj.placeholder = "";
+    inTelefone.disabled = true; inTelefone.value = ""; inTelefone.placeholder = "";
+    inEndereco.disabled = true; inEndereco.value = ""; inEndereco.placeholder = "";
+    inCreditoDisp.disabled = true; inCreditoDisp.value = ""; inCreditoDisp.placeholder = "";
 
     btOk.disabled = true;
 }
@@ -655,7 +655,7 @@ function desabilitarCamposFornecedor() {
  */
 function limparTela() {
     outResultado.textContent = "";
-    sectionResult.innerHTML  = "";
+    sectionResult.innerHTML = "";
 }
 
 /**
@@ -707,17 +707,17 @@ function gerarTabelaHtmlProdutos(vetObjetosLiteraisProduto) {
 
         let tdDescricao = document.createElement("td");
         let tdPrecoCompra = document.createElement("td");
-        let tdPrecoVenda  = document.createElement("td");
-        let tdEstoque     = document.createElement("td");
-        let tdTotal       = document.createElement("td");
-        let tdFornecedor  = document.createElement("td");
+        let tdPrecoVenda = document.createElement("td");
+        let tdEstoque = document.createElement("td");
+        let tdTotal = document.createElement("td");
+        let tdFornecedor = document.createElement("td");
 
-        tdDescricao.innerHTML   = objLiteralProduto.descricao;
+        tdDescricao.innerHTML = objLiteralProduto.descricao;
         tdPrecoCompra.innerHTML = "R$ " + objLiteralProduto.precoCompra.toFixed(2);
-        tdPrecoVenda.innerHTML  = "R$ " + objLiteralProduto.precoVenda.toFixed(2);
-        tdEstoque.innerHTML     = objLiteralProduto.qtdEstoque;
-        tdTotal.innerHTML       = objLiteralProduto.totalAno;
-        tdFornecedor.innerHTML  = strFornecedor;
+        tdPrecoVenda.innerHTML = "R$ " + objLiteralProduto.precoVenda.toFixed(2);
+        tdEstoque.innerHTML = objLiteralProduto.qtdEstoque;
+        tdTotal.innerHTML = objLiteralProduto.totalAno;
+        tdFornecedor.innerHTML = strFornecedor;
 
         linha.appendChild(tdDescricao);
         linha.appendChild(tdPrecoCompra);
@@ -739,7 +739,7 @@ function gerarTabelaHtmlProdutos(vetObjetosLiteraisProduto) {
  */
 function gerarTabelaHtmlVendas(vetObjetosLiteraisVenda) {
     let meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun",
-                 "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+        "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 
     let table = document.createElement("table");
     let thead = document.createElement("thead");
@@ -799,17 +799,17 @@ function gerarTabelaHtmlFornecedores(vetObjetosLiteraisFornecedor) {
     vetObjetosLiteraisFornecedor.forEach((objLiteralFornecedor) => {
         let linha = document.createElement("tr");
 
-        let tdRazao    = document.createElement("td");
-        let tdCnpj     = document.createElement("td");
+        let tdRazao = document.createElement("td");
+        let tdCnpj = document.createElement("td");
         let tdTelefone = document.createElement("td");
         let tdEndereco = document.createElement("td");
-        let tdCredito  = document.createElement("td");
+        let tdCredito = document.createElement("td");
 
-        tdRazao.innerHTML    = objLiteralFornecedor.razaoSocial;
-        tdCnpj.innerHTML     = objLiteralFornecedor.cnpj;
+        tdRazao.innerHTML = objLiteralFornecedor.razaoSocial;
+        tdCnpj.innerHTML = objLiteralFornecedor.cnpj;
         tdTelefone.innerHTML = objLiteralFornecedor.telefone;
         tdEndereco.innerHTML = objLiteralFornecedor.endereco;
-        tdCredito.innerHTML  = "R$ " + objLiteralFornecedor.credito.toFixed(2);
+        tdCredito.innerHTML = "R$ " + objLiteralFornecedor.credito.toFixed(2);
 
         linha.appendChild(tdRazao);
         linha.appendChild(tdCnpj);

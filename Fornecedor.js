@@ -66,7 +66,7 @@ export class Fornecedor {
             `Endereço: ${this.#endereco}\n` +
             `Crédito: ${this.#creditoDisp}\n`
     }
-    
+
     stringify() {
         return JSON.stringify({
             razao_social: this.#razaoSocial,
