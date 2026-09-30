@@ -520,7 +520,7 @@ function executarOpcaoFornecedor() {
                 exibirMensagem("O campo CNPJ é obrigatório!", "red");
                 inCnpj.focus();
             } else {
-                if (armazemControl.cadastrarFornecedor(razaoSoc, cnpj, telefone, endereco, credito)) {
+                if (armazemControl.cadastraFornecedor(razaoSoc, cnpj, telefone, endereco, credito)) {
                     exibirMensagem("Fornecedor \"" + razaoSoc + "\" cadastrado com sucesso!", "blue");
                 } else {
                     exibirMensagem("Erro! Já existe um fornecedor com o CNPJ \"" + cnpj + "\"!", "red");

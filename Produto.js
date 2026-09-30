@@ -24,7 +24,7 @@ export class Produto {
     constructor(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
         _vendasMensais = new Array(12).fill(0),
         _fornecedor = undefined) {
-        this.#descricao = _descricao;
+        this.#descricao = _descricao.toUpperCase();
         this.#precoCompra = _precoCompra;
         this.#precoVenda = _precoVenda;
         this.#qtdEstoque = _qtdEstoque;

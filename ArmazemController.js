@@ -4,17 +4,24 @@ import { Produto } from './Produto.js';
 export class ArmazemController {
     #vetArmazem;
     #vetProdutos;
+
     constructor() {
         this.#vetArmazem = [];
         this.#vetProdutos = [];
     }
 
-    cadastraFornecedor(razao_social, endereco, telefone, cnpj, credito) {
+    // ══════════════════════════════════════════════════════════════════
+    // MÉTODOS DE FORNECEDOR
+    // ══════════════════════════════════════════════════════════════════
 
+    cadastraFornecedor(razao_social, endereco, telefone, cnpj, credito) {
         let fornecedor = this.pesquisarFornecedor(cnpj);
 
         if (fornecedor == undefined) {
-            this.#vetArmazem.push(new Fornecedor(razao_social, endereco, telefone, cnpj, credito));
+            // ─── AJUSTE: ordem dos parâmetros do construtor do Fornecedor.
+            // O construtor espera (razaoSocial, cnpj, telefone, endereco, credito).
+            this.#vetArmazem.push(new Fornecedor(razao_social, cnpj, telefone, endereco, credito));
+            this.salvarDados();
             return true;
         }
         return false;
@@ -26,15 +33,14 @@ export class ArmazemController {
     }
 
     excluirFornecedor(infoCNPJ) {
-
         let indFornecedor = this.#vetArmazem.findIndex((fornecedor) =>
             fornecedor.cnpj == infoCNPJ);
 
         if (indFornecedor == -1) {
             return false;
-
         } else {
             this.#vetArmazem.splice(indFornecedor, 1);
+            this.salvarDados();
             return true;
         }
     }
@@ -44,21 +50,43 @@ export class ArmazemController {
             (fornecedor) => fornecedor.cnpj == cnpj);
 
         if (objFornecedor != undefined) {
-            objFornecedor.cnpj = cnpj;
-            objFornecedor.razao_social = razao_social;
-            objFornecedor.endereco = endereco;
+            // ─── AJUSTE: os setters do Fornecedor são razaoSocial, telefone,
+            // endereco e credito (camelCase), não razao_social.
+            objFornecedor.razaoSocial = razao_social;
             objFornecedor.telefone = telefone;
+            objFornecedor.endereco = endereco;
             objFornecedor.credito = credito;
+            this.salvarDados();
             return true;
         }
         return false;
+    }
+
+    /**
+     * ─── AJUSTE: método novo. A View chama consultarFornecedor(cnpj),
+     * mas ele não existia. Retorna um DTO (objeto literal).
+     */
+    consultarFornecedor(cnpj) {
+        let objFornecedor = this.pesquisarFornecedor(cnpj);
+
+        if (objFornecedor == undefined) {
+            return undefined;
+        }
+
+        return {
+            razaoSocial: objFornecedor.razaoSocial,
+            cnpj: objFornecedor.cnpj,
+            telefone: objFornecedor.telefone,
+            endereco: objFornecedor.endereco,
+            credito: objFornecedor.credito
+        };
     }
 
     listarFornecedores() {
         var vetObjFornecedores = [];
         this.#vetArmazem.forEach((fornecedor) => {
             vetObjFornecedores.push({
-                razao_social: fornecedor.razao_social,
+                razaoSocial: fornecedor.razaoSocial,
                 cnpj: fornecedor.cnpj,
                 endereco: fornecedor.endereco,
                 telefone: fornecedor.telefone,
@@ -69,11 +97,14 @@ export class ArmazemController {
     }
 
     filtrarFornecedoresPorCredito(creditoFiltrado) {
-        var vetCreditosFiltrados = this.#vetArmazem.filter((fornecedor => fornecedor.credito == creditoFiltrado))
-        var vetObjFornecedores = []
+        // ─── AJUSTE: a tarefa pede "a partir de", então usamos >= e não ==.
+        var vetCreditosFiltrados = this.#vetArmazem.filter((fornecedor) =>
+            fornecedor.credito >= creditoFiltrado);
+
+        var vetObjFornecedores = [];
         vetCreditosFiltrados.forEach((fornecedor) => {
             vetObjFornecedores.push({
-                razao_social: fornecedor.razao_social,
+                razaoSocial: fornecedor.razaoSocial,
                 cnpj: fornecedor.cnpj,
                 endereco: fornecedor.endereco,
                 telefone: fornecedor.telefone,
@@ -83,40 +114,57 @@ export class ArmazemController {
         return vetObjFornecedores;
     }
 
-    //Seção de Produtos
+    // ══════════════════════════════════════════════════════════════════
+    // MÉTODOS DE PRODUTO
+    // ══════════════════════════════════════════════════════════════════
 
-    cadastrarProdutos(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
-        _vendasMensais, _fornecedor) {
+    /**
+     * Cadastra um novo produto.
+     * Não permite descrição duplicada.
+     */
+    cadastrarProduto(descricao, precoCompra, precoVenda, qtdEstoque) {
+        // ─── AJUSTE: o método se chamava "cadastrarProdutos" (plural) e
+        // tinha uma linha "this.pesquisarFornecedor(cnpj)" com uma
+        // variável "cnpj" que não existia. Removi essa linha porque um
+        // produto pode ser cadastrado sem fornecedor.
+        let objProduto = this.#vetProdutos.find((produto) =>
+            produto.descricao == descricao.toUpperCase());
 
-        let fornecedor = this.pesquisarFornecedor(cnpj);
-
-        if (fornecedor == undefined) {
-            this.#vetProdutos.push(new Produto(_descricao, _precoCompra, _precoVenda, _qtdEstoque,
-                _vendasMensais, _fornecedor));
+        if (objProduto == undefined) {
+            this.#vetProdutos.push(new Produto(descricao, precoCompra, precoVenda, qtdEstoque));
+            this.salvarDados();
             return true;
         }
         return false;
     }
 
+    /**
+     * Exclui um produto pela descrição.
+     */
     excluirProduto(infoDesc) {
+        // ─── AJUSTE: era "produto._descricao" (com underscore). O getter
+        // é "descricao". Também adicionei toUpperCase() para busca
+        // case-insensitive.
         let indProduto = this.#vetProdutos.findIndex((produto) =>
-            produto._descricao == infoDesc);
+            produto.descricao == infoDesc.toUpperCase());
 
         if (indProduto == -1) {
             return false;
-
         } else {
             this.#vetProdutos.splice(indProduto, 1);
+            this.salvarDados();
             return true;
         }
     }
+
     /**
-         * Altera dados de um produto. Apenas os campos informados são alterados.
-         * Se o CNPJ do fornecedor for informado, verifica se existe antes de vincular.
-         *
-         * Retorna código simbólico:
-         *   "SUCESSO" | "PRODUTO_NAO_ENCONTRADO" | "FORNECEDOR_NAO_ENCONTRADO"
-         */
+     * Altera dados de um produto. Apenas os campos informados (> 0) são
+     * alterados. Se o CNPJ do fornecedor for informado, verifica se
+     * existe antes de vincular.
+     *
+     * Retorna: "SUCESSO" | "PRODUTO_NAO_ENCONTRADO"
+     *        | "FORNECEDOR_NAO_ENCONTRADO"
+     */
     alterarProduto(descricao, precoCompra, precoVenda, qtdEstoque, cnpjForn) {
         let objProduto = this.#vetProdutos.find((produto) =>
             produto.descricao == descricao.toUpperCase());
@@ -150,8 +198,7 @@ export class ArmazemController {
 
     /**
      * Altera a quantidade vendida de um produto em um mês específico.
-     * Retorna código simbólico:
-     *   "SUCESSO" | "PRODUTO_NAO_ENCONTRADO" | "MES_INVALIDO"
+     * Retorna: "SUCESSO" | "PRODUTO_NAO_ENCONTRADO" | "MES_INVALIDO"
      */
     alterarVendaMes(descricao, mes, qtdVendida) {
         if (mes < 1 || mes > 12) {
@@ -174,10 +221,26 @@ export class ArmazemController {
     }
 
     /**
+ * Consulta um produto pela descrição.
+ * Retorna um DTO (objeto literal) com os dados do produto — incluindo
+ * os dados do fornecedor, se houver um vinculado — ou undefined caso
+ * o produto não seja encontrado.
+ */
+consultarProduto(descricao) {
+    let objProduto = this.#vetProdutos.find((produto) =>
+        produto.descricao == descricao.toUpperCase());
+
+    if (objProduto == undefined) {
+        return undefined;
+    }
+
+    return this.#produtoParaDTO(objProduto);
+}
+
+    /**
      * Registra a compra de um produto (aumenta o estoque).
-     * Retorna código simbólico:
-     *   "SUCESSO" | "PRODUTO_NAO_ENCONTRADO"
-     *   | "FORNECEDOR_NAO_ENCONTRADO" | "CREDITO_INSUFICIENTE"
+     * Retorna: "SUCESSO" | "PRODUTO_NAO_ENCONTRADO"
+     *        | "FORNECEDOR_NAO_ENCONTRADO" | "CREDITO_INSUFICIENTE"
      */
     comprarProduto(descricao, qtdComprada, novoPrecoCompra, novoPrecoVenda, cnpjForn) {
         let objProduto = this.#vetProdutos.find((produto) =>
@@ -225,8 +288,8 @@ export class ArmazemController {
     }
 
     /**
-     * Registra a venda de um produto (abate do estoque e atualiza
-     * a venda do mês atual).
+     * Registra a venda de um produto (abate do estoque e atualiza a
+     * venda do mês atual).
      *
      * Retorna objeto:
      *   { codigo: "SUCESSO", totalVenda }
@@ -264,7 +327,6 @@ export class ArmazemController {
 
     /**
      * Consulta o total vendido no ano por um produto.
-     * Retorna DTO { descricao, totalVendas } ou undefined.
      */
     consultarTotalVendasAno(descricao) {
         let objProduto = this.#vetProdutos.find((produto) =>
@@ -282,7 +344,6 @@ export class ArmazemController {
 
     /**
      * Consulta o produto mais vendido em um mês (1..12).
-     * Retorna DTO { descricao, qtdVendida } ou undefined.
      */
     consultarMaisVendidoMes(mes) {
         if (this.#vetProdutos.length == 0) {
@@ -308,7 +369,6 @@ export class ArmazemController {
 
     /**
      * Faturamento de um mês: soma (qtdVendida * precoVenda) de cada produto.
-     * Retorna DTO { mes, faturamento }.
      */
     consultarFaturamentoMes(mes) {
         var faturamento = 0;
@@ -349,7 +409,6 @@ export class ArmazemController {
 
     /**
      * Filtra produtos com estoque menor ou igual ao valor informado.
-     * (Necessário porque a View chama este método.)
      */
     filtrarProdutosPorEstoque(qtdMaxima) {
         var vetFiltrados = [];
@@ -409,7 +468,9 @@ export class ArmazemController {
         };
     }
 
-    //Persistência
+    // ══════════════════════════════════════════════════════════════════
+    // PERSISTÊNCIA
+    // ══════════════════════════════════════════════════════════════════
 
     /**
      * Carrega fornecedores e produtos do localStorage.
@@ -417,58 +478,68 @@ export class ArmazemController {
      * (para religar a referência Produto → Fornecedor pelo CNPJ).
      */
     carregarDados() {
-        // Limpa os vetores atuais antes de carregar
-        this.#vetProdutos = [];
+        // ─── AJUSTE: limpar os dois vetores (o código anterior limpava
+        // #vetProdutos duas vezes e nunca limpava #vetArmazem).
+        this.#vetArmazem = [];
         this.#vetProdutos = [];
 
+        // 1) FORNECEDORES
         var vetFornecedoresSalvos = [];
-        var vetProdutosSalvos = [];
+        var strJSONFornecedores = localStorage.getItem("fornecedoresSalvos");
 
-        // Carrega e reconstrói os fornecedores
-        const fornecedoresSalvos = localStorage.getItem("fornecedoresSalvos");
-        if (fornecedoresSalvos) {
-            vetFornecedoresSalvos = JSON.parse(fornecedoresSalvos);
-
+        if (strJSONFornecedores != null) {
+            vetFornecedoresSalvos = JSON.parse(strJSONFornecedores);
         }
 
         if (vetFornecedoresSalvos.length > 0) {
             vetFornecedoresSalvos.forEach((objLitFornecedor) => {
+                // ─── AJUSTE: ordem correta dos parâmetros do construtor
+                // (razaoSocial, cnpj, telefone, endereco, credito).
                 this.#vetArmazem.push(new Fornecedor(
-                        objLitFornecedor.razao_social, 
-                        objLitFornecedor.endereco,    
-                        objLitFornecedor.telefone,     
-                        objLitFornecedor.cnpj,        
-                        objLitFornecedor.credito
-                    ))
+                    objLitFornecedor.razao_social,
+                    objLitFornecedor.cnpj,
+                    objLitFornecedor.telefone,
+                    objLitFornecedor.endereco,
+                    objLitFornecedor.credito
+                ));
             });
-
         }
 
-        // Carrega e reconstrói os produtos
-        const produtosSalvos = localStorage.getItem("produtosSalvos");
-        if (produtosSalvos) {
-            vetProdutosSalvos = JSON.parse(produtosSalvos);
+        // 2) PRODUTOS — religando ao fornecedor pelo CNPJ
+        var vetProdutosSalvos = [];
+        var strJSONProdutos = localStorage.getItem("produtosSalvos");
 
+        if (strJSONProdutos != null) {
+            vetProdutosSalvos = JSON.parse(strJSONProdutos);
         }
 
         if (vetProdutosSalvos.length > 0) {
-            vetProdutosSalvos.forEach((objLitProdutos) => {
+            vetProdutosSalvos.forEach((objLitProduto) => {
+                // ─── AJUSTE: o JSON do Produto grava "descricao",
+                // "precoCompra", "precoVenda", "qtdEstoque",
+                // "vendasMensais" e "cnpjForn" (sem underscore).
+                // Também religamos o fornecedor pelo CNPJ.
+                var objFornecedor = undefined;
+                if (objLitProduto.cnpjForn != null) {
+                    objFornecedor = this.pesquisarFornecedor(objLitProduto.cnpjForn);
+                }
+
                 this.#vetProdutos.push(new Produto(
-                    objLitProdutos._descricao,
-                    objLitProdutos._precoCompra,
-                    objLitProdutos._precoVenda,
-                    objLitProdutos._qtdEstoque, 
-                    objLitProdutos._vendasMensais, 
-                    objLitProdutos._fornecedor     
-                ))
-            })
+                    objLitProduto.descricao,
+                    objLitProduto.precoCompra,
+                    objLitProduto.precoVenda,
+                    objLitProduto.qtdEstoque,
+                    objLitProduto.vendasMensais,
+                    objFornecedor
+                ));
+            });
         }
     }
 
     /**
      * Salva fornecedores e produtos no localStorage.
-     * Usa o stringify() de cada objeto para serializar
-     * (Produto grava apenas o CNPJ do fornecedor).
+     * Usa o stringify() de cada objeto (Produto grava apenas o CNPJ
+     * do fornecedor).
      */
     salvarDados() {
         if (this.#vetArmazem.length > 0) {
@@ -476,9 +547,9 @@ export class ArmazemController {
             for (let i = 1; i < this.#vetArmazem.length; i++) {
                 strJSONvetArmazem += "," + this.#vetArmazem[i].stringify();
             }
-            strJSONvetArmazem += "\n]"
+            strJSONvetArmazem += "]";
 
-            localStorage.setItem("fornecedoresSalvos", strJSONvetArmazem)
+            localStorage.setItem("fornecedoresSalvos", strJSONvetArmazem);
         }
 
         if (this.#vetProdutos.length > 0) {
@@ -486,9 +557,9 @@ export class ArmazemController {
             for (let i = 1; i < this.#vetProdutos.length; i++) {
                 strJSONvetProdutos += "," + this.#vetProdutos[i].stringify();
             }
-            strJSONvetProdutos += "\n]"
+            strJSONvetProdutos += "]";
 
-            localStorage.setItem("produtosSalvos", strJSONvetProdutos)
+            localStorage.setItem("produtosSalvos", strJSONvetProdutos);
         }
     }
 }
