@@ -154,11 +154,74 @@ export class ArmazemController {
     //Persistência
 
     carregarDados() {
+        // Limpa os vetores atuais antes de carregar
+        this.#vetProdutos = [];
+        this.#vetProdutos = [];
 
+        var vetFornecedoresSalvos = [];
+        var vetProdutosSalvos = [];
+
+        // Carrega e reconstrói os fornecedores
+        const fornecedoresSalvos = localStorage.getItem("fornecedoresSalvos");
+        if (fornecedoresSalvos) {
+            vetFornecedoresSalvos = JSON.parse(fornecedoresSalvos);
+
+        }
+
+        if (vetFornecedoresSalvos.length > 0) {
+            vetFornecedoresSalvos.forEach((objLitFornecedor) => {
+                this.#vetArmazem.push(new Fornecedor(
+                        objLitFornecedor.razao_social, 
+                        objLitFornecedor.endereco,    
+                        objLitFornecedor.telefone,     
+                        objLitFornecedor.cnpj,        
+                        objLitFornecedor.credito
+                    ))
+            });
+
+        }
+
+        // Carrega e reconstrói os produtos
+        const produtosSalvos = localStorage.getItem("produtosSalvos");
+        if (produtosSalvos) {
+            vetProdutosSalvos = JSON.parse(produtosSalvos);
+
+        }
+
+        if (vetProdutosSalvos.length > 0) {
+            vetProdutosSalvos.forEach((objLitProdutos) => {
+                this.#vetProdutos.push(new Produto(
+                    objLitProdutos._descricao,
+                    objLitProdutos._precoCompra,
+                    objLitProdutos._precoVenda,
+                    objLitProdutos._qtdEstoque, 
+                    objLitProdutos._vendasMensais, 
+                    objLitProdutos._fornecedor     
+                ))
+            })
+        }
     }
 
     salvarDados() {
+        if (this.#vetArmazem.length > 0) {
+            var strJSONvetArmazem = "[" + this.#vetArmazem[0].stringify();
+            for (let i = 1; i < this.#vetArmazem.length; i++) {
+                strJSONvetArmazem += "," + this.#vetArmazem[i].stringify();
+            }
+            strJSONvetArmazem += "\n]"
 
+            localStorage.setItem("fornecedoresSalvos", strJSONvetArmazem)
+        }
+
+        if (this.#vetProdutos.length > 0) {
+            var strJSONvetProdutos = "[" + this.#vetProdutos[0].stringify();
+            for (let i = 1; i < this.#vetProdutos.length; i++) {
+                strJSONvetProdutos += "," + this.#vetProdutos[i].stringify();
+            }
+            strJSONvetProdutos += "\n]"
+
+            localStorage.setItem("produtosSalvos", strJSONvetProdutos)
+        }
     }
 }
 
