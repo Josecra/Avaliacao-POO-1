@@ -155,6 +155,9 @@ export class ArmazemController {
 
     carregarDados() {
         // Limpa os vetores atuais antes de carregar
+        this.#vetProdutos = [];
+        this.#vetProdutos = [];
+
         var vetFornecedoresSalvos = [];
         var vetProdutosSalvos = [];
 
@@ -166,8 +169,15 @@ export class ArmazemController {
         }
 
         if (vetFornecedoresSalvos.length > 0) {
-            vetFornecedoresSalvos.forEach((objLitFornecedor) => {this.#vetArmazem.push(new Fornecedor(objLitFornecedor.razaoSocial,
-            objLitFornecedor.cnpj, objLitFornecedor.telefone, objLitFornecedor.endereco, objLitFornecedor.credito))});
+            vetFornecedoresSalvos.forEach((objLitFornecedor) => {
+                this.#vetArmazem.push(new Fornecedor(
+                        objLitFornecedor.razao_social, 
+                        objLitFornecedor.endereco,    
+                        objLitFornecedor.telefone,     
+                        objLitFornecedor.cnpj,        
+                        objLitFornecedor.credito
+                    ))
+            });
 
         }
 
@@ -178,9 +188,17 @@ export class ArmazemController {
 
         }
 
-        if (vetProdutosSalvos.length > 0){
-            vetProdutosSalvos.forEach((objLitProdutos) => {this.#vetProdutos.push(new Produto(objLitProdutos._descricao, objLitProdutos._precoCompra,
-            objLitProdutos._precoVenda, objLitProdutos._fornecedor, objLitProdutos._qtdEstoque, objLitProdutos._vendasMensais))})
+        if (vetProdutosSalvos.length > 0) {
+            vetProdutosSalvos.forEach((objLitProdutos) => {
+                this.#vetProdutos.push(new Produto(
+                    objLitProdutos._descricao,
+                    objLitProdutos._precoCompra,
+                    objLitProdutos._precoVenda,
+                    objLitProdutos._qtdEstoque, 
+                    objLitProdutos._vendasMensais, 
+                    objLitProdutos._fornecedor     
+                ))
+            })
         }
     }
 
@@ -192,7 +210,7 @@ export class ArmazemController {
             }
             strJSONvetArmazem += "\n]"
 
-            localStorage.setItem("fornecedoresSalvos", strJSONVetArmazem)
+            localStorage.setItem("fornecedoresSalvos", strJSONvetArmazem)
         }
 
         if (this.#vetProdutos.length > 0) {
